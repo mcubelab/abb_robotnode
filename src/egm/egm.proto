@@ -3,6 +3,7 @@
 // messages of type EgmRobot are sent out from the robot controller
 // messages of type EgmSensor are sent to the robot controller
 //
+syntax = "proto2";
 package abb.egm;
 
 message EgmHeader
