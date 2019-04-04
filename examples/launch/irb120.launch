@@ -1,0 +1,4 @@
+<launch>
+    <rosparam command="load" file="$(find abb_robotnode)/param/example.yaml"/>
+    <node pkg="abb_robotnode" type="abb_robotnode" name="abb_robotnode1" output="screen" args="1"/>
+</launch>

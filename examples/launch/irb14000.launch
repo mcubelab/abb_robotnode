@@ -1,0 +1,5 @@
+<launch>
+    <rosparam command="load" file="$(find abb_robotnode)/param/yumi.yaml"/>
+    <node pkg="abb_robotnode" type="abb_robotnode" name="abb_robotnode1" output="screen" args="1"/>
+    <node pkg="abb_robotnode" type="abb_robotnode" name="abb_robotnode2" output="screen" args="2"/>
+</launch>

@@ -1,0 +1,44 @@
+robot1: {
+  # Robot model
+  model: irb120,
+
+  # Robot speed when performing moves in standard mode
+  # See speeddata RAPID documentation, 3.55, page 1185
+  speedORI: 10.0, speedTCP: 50.0, speedJoints: 5.0,
+
+  # Robot tool frame
+  # See tooldata RAPID documentation, 3.66, page 1208
+  toolQ0: 1.0, toolQX: 0.0, toolQY: 0.0, toolQZ: 0.0,
+  toolX: 0.0, toolY: 0.0, toolZ: 0.0,
+
+  # Robot tool inertia
+  # See tooldata RAPID documentation, 3.66, page 1209-10
+  toolMass: 0.1,
+  toolCGX: -0.1, toolCGY: 8.3, toolCGZ: 310.4,
+  toolIX: 0.023, toolIY: 0.02, toolIZ: 0.036,
+
+  # Robot work object frame
+  # See wobjdata RAPID documentation, 3.75, page 1224-25
+  workobjectQ0: 1, workobjectQX: 0, workobjectQY: 0, workobjectQZ: 0,
+  workobjectX: 0, workobjectY: 0, workobjectZ: 0,
+
+  # Maximum acceleration and deacceleration in (m/s^2)
+  maxAcceleration: 4, maxDeacceleration: 4,
+
+  # Zone data: Sets the movement termination behavior based on
+  # stop points or fly-by points and their zones.
+  # See zonedata RAPID documentation, 3.78, page 1232-37, and robot_comm/robot_comm.h
+  zone: 1,
+
+  # Connection parameters
+  ip: 192.168.0.191,
+  infoPort: 5000,
+  motionPort: 5001,
+  loggerPort: 5002,
+  egmPort: 6510,
+  useLogger: true,
+
+  # Other parameters
+  vacuum: 0,
+  supervision: 90,
+}
