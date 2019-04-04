@@ -1,5 +1,4 @@
-#include <abb_robotnode/RobotController.hpp>
-#include <abb_robotnode/Zones.hpp>
+#include "abb_robotnode/RobotController.hpp"
 
 SERVICE_CALLBACK_DEF(SetIOSignal)
 {

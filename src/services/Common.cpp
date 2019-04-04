@@ -1,5 +1,5 @@
 #include <abb_robotnode/Services.hpp>
-#include <abb_robotnode/RobotController.hpp>
+#include "abb_robotnode/RobotController.hpp"
 
 bool RobotController::prepareCartesian(char* msg, int idCode, int randNumber, double x, double y, double z, double q0, double qx, double qy, double qz)
 {

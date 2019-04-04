@@ -2,7 +2,7 @@
   abb_robotnode: Main program
 */
 
-#include <abb_robotnode/RobotController.hpp>
+#include "abb_robotnode/RobotController.hpp"
 
 void loggerMain(RobotController* robot);
 

@@ -1,4 +1,4 @@
-#include <abb_robotnode/RobotController.hpp>
+#include "abb_robotnode/RobotController.hpp"
 
 // ------------------------ Initialization ------------------------
 RobotController::RobotController(ros::NodeHandle *n)

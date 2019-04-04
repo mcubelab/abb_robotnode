@@ -1,4 +1,4 @@
-#include <abb_robotnode/RobotController.hpp>
+#include "abb_robotnode/RobotController.hpp"
 
 int RobotController::setMaxSpeed(double tcp, double ori, double joints) {
   maxTcpSpeed = tcp;

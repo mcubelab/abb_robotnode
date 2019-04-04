@@ -1,4 +1,4 @@
-#include <abb_robotnode/RobotController.hpp>
+#include "abb_robotnode/RobotController.hpp"
 
 int RobotController::setWorkObject(double x, double y, double z, double q0, double qx, double qy, double qz) {
   if(x == currentWobj[0] && y == currentWobj[1] && z == currentWobj[2]

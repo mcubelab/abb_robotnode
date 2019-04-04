@@ -1,4 +1,4 @@
-#include <abb_robotnode/RobotController.hpp>
+#include "abb_robotnode/RobotController.hpp"
 
 int RobotController::setInertia(double m, double cgx, double cgy, double cgz, double ix, double iy, double iz) {
   if(m == currentInertia[0] && cgx == currentInertia[1] && cgy == currentInertia[2] && cgz == currentInertia[3]

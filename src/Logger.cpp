@@ -6,7 +6,7 @@
   specified interval. This exits when ROS shuts down.
 */
 
-#include <abb_robotnode/RobotController.hpp>
+#include "abb_robotnode/RobotController.hpp"
 
 void RobotController::loggerMain()
 {

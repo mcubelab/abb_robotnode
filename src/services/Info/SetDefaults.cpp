@@ -1,5 +1,4 @@
-#include <abb_robotnode/Services.hpp>
-#include <abb_robotnode/RobotController.hpp>
+#include "abb_robotnode/RobotController.hpp"
 
 int RobotController::setDefaults() {
   double defWOx, defWOy, defWOz, defWOq0, defWOqx, defWOqy, defWOqz;

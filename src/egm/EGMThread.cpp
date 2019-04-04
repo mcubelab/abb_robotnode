@@ -2,7 +2,7 @@
   abb_robotnode: EGM thread
 */
 
-#include <abb_robotnode/RobotController.hpp>
+#include "abb_robotnode/RobotController.hpp"
 #include <abb_robotnode/egm/PracticalSocket.h>
 
 #pragma comment(lib, "libprotobuf.lib")

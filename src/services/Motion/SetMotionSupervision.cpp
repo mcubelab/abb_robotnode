@@ -1,4 +1,4 @@
-#include <abb_robotnode/RobotController.hpp>
+#include "abb_robotnode/RobotController.hpp"
 
 int RobotController::setMotionSupervision(double val) {
   if(val <= 0 || val > 300) {
