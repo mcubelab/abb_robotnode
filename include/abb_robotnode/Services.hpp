@@ -10,6 +10,7 @@
 #include "abb_robotnode/Service_GetGripperStatus.h"
 #include "abb_robotnode/Service_GetIK.h"
 #include "abb_robotnode/Service_GetJoints.h"
+#include "abb_robotnode/Service_GetRobotAngle.h"
 #include "abb_robotnode/Service_SetDefaults.h"
 #include "abb_robotnode/Service_SetInertia.h"
 #include "abb_robotnode/Service_SetIOSignal.h"
@@ -63,6 +64,7 @@ SERVICE_CALLBACK_DEC(SetIOSignal) \
 SERVICE_CALLBACK_DEC(GetGripperPosition) \
 SERVICE_CALLBACK_DEC(GetGripperStatus) \
 SERVICE_CALLBACK_DEC(GetJoints) \
+SERVICE_CALLBACK_DEC(GetRobotAngle) \
 SERVICE_CALLBACK_DEC(SetCartesian) \
 SERVICE_CALLBACK_DEC(SetDefaults) \
 SERVICE_CALLBACK_DEC(SetEGMMode) \
@@ -85,6 +87,7 @@ ADVERTISE_SERVICE(GetGripperPosition) IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(GetGripperStatus) IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(GetIK) IRB120|IRB1600|IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(GetJoints) IRB120|IRB1600|IRB14000 END_SERVICE() \
+ADVERTISE_SERVICE(GetRobotAngle) IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(SetCartesian) IRB120|IRB1600|IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(SetDefaults) IRB120|IRB1600|IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(SetEGMMode) IRB120|IRB1600|IRB14000 END_SERVICE() \

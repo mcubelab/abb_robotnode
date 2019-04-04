@@ -31,6 +31,7 @@ add_service_files(DIRECTORY srv FILES
   Info/Service_GetGripperStatus.srv
   Info/Service_GetIK.srv
   Info/Service_GetJoints.srv
+  Info/Service_GetRobotAngle.srv
   Info/Service_Ping.srv
   Info/Service_SetDefaults.srv
   Info/Service_SetInertia.srv
@@ -88,6 +89,7 @@ add_executable(abb_robotnode
   src/services/Info/GetGripperStatus.cpp
   src/services/Info/GetIK.cpp
   src/services/Info/GetJoints.cpp
+  src/services/Info/GetRobotAngle.cpp
   src/services/Info/SetDefaults.cpp
   src/services/Info/SetInertia.cpp
   src/services/Info/SetIOSignal.cpp
