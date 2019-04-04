@@ -11,6 +11,16 @@ bool RobotController::prepareCartesian(char* msg, int idCode, int randNumber, do
   return false;
 }
 
+bool RobotController::prepareCartesian(char* msg, int idCode, int randNumber, double x, double y, double z, double q0, double qx, double qy, double qz, double extra)
+{
+  // Validate that quaternion is valid
+  if(abs(q0*q0+qx*qx+qy*qy+qz*qz-1) < 0.001) {
+    sprintf(msg, "%.2d %.3d %+08.1lf %+08.1lf %+08.1lf %+08.5lf %+08.5lf %+08.5lf %+08.5lf %+08.5lf #", idCode, randNumber, x, y, z, q0, qx, qy, qz, extra);
+    return true;
+  }
+  return false;
+}
+
 bool RobotController::prepareJoints(char* msg, int idCode, int randNumber, std::vector<double>& joints)
 {
   if(model == IRB14000) {
@@ -21,6 +31,20 @@ bool RobotController::prepareJoints(char* msg, int idCode, int randNumber, std::
     // 6-DOF models
     if(joints.size() != 6) return false;
     sprintf(msg, "%.2d %.3d %+08.2lf %+08.2lf %+08.2lf %+08.2lf %+08.2lf %+08.2lf #", idCode, randNumber, joints[0], joints[1], joints[2], joints[3], joints[4], joints[5]);
+  }
+  return true;
+}
+
+bool RobotController::prepareJoints(char* msg, int idCode, int randNumber, std::vector<double>& joints, double extra)
+{
+  if(model == IRB14000) {
+    // 7-DOF models
+    if(joints.size() != 7) return false;
+    sprintf(msg, "%.2d %.3d %+08.2lf %+08.2lf %+08.2lf %+08.2lf %+08.2lf %+08.2lf %+08.2lf %+08.2lf #", idCode, randNumber, joints[0], joints[1], joints[2], joints[3], joints[4], joints[5], joints[6], extra);
+  } else {
+    // 6-DOF models
+    if(joints.size() != 6) return false;
+    sprintf(msg, "%.2d %.3d %+08.2lf %+08.2lf %+08.2lf %+08.2lf %+08.2lf %+08.2lf %+08.2lf #", idCode, randNumber, joints[0], joints[1], joints[2], joints[3], joints[4], joints[5], extra);
   }
   return true;
 }
