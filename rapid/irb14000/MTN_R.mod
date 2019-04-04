@@ -45,13 +45,16 @@ MODULE MTN_R
 
   ! Buffered move variables
   CONST num MAX_BUFFER:=512;
-  VAR num BUFFER_POS:=0;
-  VAR num BUFFER_JOINT_POS:=0;
+  VAR num BUFFER_POS_C:=0;
+  VAR num BUFFER_POS_J:=0;
+  VAR num BUFFER_POS_G:=0;
   VAR robtarget bufferTargets{MAX_BUFFER};
   VAR speeddata bufferSpeeds{MAX_BUFFER};
   VAR jointtarget bufferJointPos{MAX_BUFFER};
   VAR speeddata bufferJointSpeeds{MAX_BUFFER};
   VAR num bufferHandPoses{MAX_BUFFER};
+  VAR num bufferHandPosesC{MAX_BUFFER};
+  VAR num bufferHandPosesJ{MAX_BUFFER};
 
   ! External axis position variables
   VAR extjoint externalAxis;
@@ -679,12 +682,12 @@ MODULE MTN_R
           cartesianTarget:=[[params{1},params{2},params{3}],
                           [params{4},params{5},params{6},params{7}],
                           [0,0,0,0], externalAxis];
-          IF BUFFER_POS<MAX_BUFFER THEN
-            BUFFER_POS:=BUFFER_POS+1;
-            bufferTargets{BUFFER_POS}:=cartesianTarget;
-            bufferSpeeds{BUFFER_POS}:=currentSpeedR;
+          IF BUFFER_POS_C<MAX_BUFFER THEN
+            BUFFER_POS_C:=BUFFER_POS_C+1;
+            bufferTargets{BUFFER_POS_C}:=cartesianTarget;
+            bufferSpeeds{BUFFER_POS_C}:=currentSpeedR;
             IF nParams=8 THEN
-              bufferHandPoses{BUFFER_POS}:=params{8};
+              bufferHandPosesC{BUFFER_POS_C}:=params{8};
             ENDIF
           ENDIF
           ok:=SERVER_OK;
@@ -696,7 +699,7 @@ MODULE MTN_R
       CASE 31:
         ! ClearBuffer
         IF nParams=0 THEN
-          BUFFER_POS:=0;
+          BUFFER_POS_C:=0;
           ok:=SERVER_OK;
         ELSE
           ok:=SERVER_BAD_MSG;
@@ -706,7 +709,7 @@ MODULE MTN_R
       CASE 32:
         ! GetBufferSize
         IF nParams=0 THEN
-          addString:=NumToStr(BUFFER_POS,2);
+          addString:=NumToStr(BUFFER_POS_C,2);
           ok:=SERVER_OK;
         ELSE
           ok:=SERVER_BAD_MSG;
@@ -715,8 +718,8 @@ MODULE MTN_R
 
       CASE 33:
         ! ExecuteBuffer
-        IF nParams=2 THEN
-          IF params{1}=1 AND syncReq=0 THEN
+        IF nParams=0 OR nParams=2 THEN
+          IF nParams=2 AND params{1}=1 AND syncReq=0 THEN
             ! Sends message now to say it's ready
             sendString:=NumToStr(instructionCode,0);
             sendString:=sendString+" "+idCode;
@@ -727,36 +730,24 @@ MODULE MTN_R
             reconnected:=TRUE;
             syncReq:=1;
           ENDIF
-          FOR i FROM 1 TO (BUFFER_POS) DO
+          IF nParams=2 AND params{1}=1 THEN
+            SyncMoveOn sync1, all_tasks;
+          ENDIF
+          FOR i FROM 1 TO (BUFFER_POS_C) DO
             IF collision=0 THEN
               moveComplete:=FALSE;
-              IF params{1}=1 THEN
-                SyncMoveOn sync1, all_tasks;
-                MoveL bufferTargets{i} \ID:=i, bufferSpeeds{i},currentZoneR,currentToolR\WObj:=currentWobjR;
-                IF params{2}=1 THEN
-                  Hand_MoveTo params{2};
-                ENDIF
-                SyncMoveOff sync2;
-              ELSE
-                MoveL bufferTargets{i}, bufferSpeeds{i},currentZoneR,currentToolR\WObj:=currentWobjR;
-                IF params{2}=1 THEN
-                  Hand_MoveTo params{2};
-                ENDIF
+              MoveL bufferTargets{i}, bufferSpeeds{i},currentZoneR,currentToolR\WObj:=currentWobjR;
+              IF nParams=2 AND params{2}=1 THEN
+                Hand_MoveTo bufferHandPosesC{i};
               ENDIF
               moveComplete:=TRUE;
             ENDIF
           ENDFOR
-          syncReq:=0;
+          IF nParams=2 AND params{1}=1 THEN
+            SyncMoveOff sync2;
+            syncReq:=0;
+          ENDIF
           ok:=SERVER_OK;
-        ELSEIF nParams=0 THEN
-            FOR i FROM 1 TO (BUFFER_POS) DO
-                IF collision=0 THEN
-                    moveComplete:=FALSE;
-                    MoveL bufferTargets{i}, bufferSpeeds{i},currentZoneR,currentToolR\WObj:=currentWobjR;
-                    moveComplete:=TRUE;
-                ENDIF
-            ENDFOR
-            ok:=SERVER_OK;
         ELSE
             ok:=SERVER_BAD_MSG;
         ENDIF
@@ -794,10 +785,10 @@ MODULE MTN_R
         IF nParams=7 THEN
           jointsTarget:=[[params{1},params{2},params{3},params{4},params{5},params{6}],
                   [params{7},9E9,9E9,9E9,9E9,9E9]];
-          IF BUFFER_JOINT_POS<MAX_BUFFER THEN
-              BUFFER_JOINT_POS:=BUFFER_JOINT_POS+1;
-              bufferJointPos{BUFFER_JOINT_POS}:=jointsTarget;
-              bufferJointSpeeds{BUFFER_JOINT_POS}:=currentSpeedR;
+          IF BUFFER_POS_J<MAX_BUFFER THEN
+              BUFFER_POS_J:=BUFFER_POS_J+1;
+              bufferJointPos{BUFFER_POS_J}:=jointsTarget;
+              bufferJointSpeeds{BUFFER_POS_J}:=currentSpeedR;
           ENDIF
           ok:=SERVER_OK;
         ELSE
@@ -808,7 +799,7 @@ MODULE MTN_R
       CASE 38:
         ! ClearJointBuffer
         IF nParams=0 THEN
-          BUFFER_JOINT_POS:=0;
+          BUFFER_POS_J:=0;
           ok:=SERVER_OK;
         ELSE
           ok:=SERVER_BAD_MSG;
@@ -818,7 +809,7 @@ MODULE MTN_R
       CASE 39:
       ! GetJointBufferSize
         IF nParams=0 THEN
-          addString:=NumToStr(BUFFER_JOINT_POS,2);
+          addString:=NumToStr(BUFFER_POS_J,2);
           ok:=SERVER_OK;
         ELSE
           ok:=SERVER_BAD_MSG;
@@ -845,17 +836,17 @@ MODULE MTN_R
           bufferJointSpeeds{1}.v_ori:=bufferJointSpeeds{1}.v_ori*0.50;
           bufferJointSpeeds{2}.v_tcp:=bufferJointSpeeds{2}.v_tcp*0.75;
           bufferJointSpeeds{2}.v_ori:=bufferJointSpeeds{2}.v_ori*0.75;
-          bufferJointSpeeds{BUFFER_JOINT_POS-1}.v_tcp:=bufferJointSpeeds{BUFFER_JOINT_POS-1}.v_tcp*0.75;
-          bufferJointSpeeds{BUFFER_JOINT_POS-1}.v_ori:=bufferJointSpeeds{BUFFER_JOINT_POS-1}.v_ori*0.75;
-          bufferJointSpeeds{BUFFER_JOINT_POS}.v_tcp:=bufferJointSpeeds{BUFFER_JOINT_POS}.v_tcp*0.50;
-          bufferJointSpeeds{BUFFER_JOINT_POS}.v_ori:=bufferJointSpeeds{BUFFER_JOINT_POS}.v_ori*0.50;
+          bufferJointSpeeds{BUFFER_POS_J-1}.v_tcp:=bufferJointSpeeds{BUFFER_POS_J-1}.v_tcp*0.75;
+          bufferJointSpeeds{BUFFER_POS_J-1}.v_ori:=bufferJointSpeeds{BUFFER_POS_J-1}.v_ori*0.75;
+          bufferJointSpeeds{BUFFER_POS_J}.v_tcp:=bufferJointSpeeds{BUFFER_POS_J}.v_tcp*0.50;
+          bufferJointSpeeds{BUFFER_POS_J}.v_ori:=bufferJointSpeeds{BUFFER_POS_J}.v_ori*0.50;
           !Trapezoidal velocity
 
-          FOR i FROM 1 TO (BUFFER_JOINT_POS) DO
+          FOR i FROM 1 TO (BUFFER_POS_J) DO
             IF collision=0 THEN
               IF params{1}=1 THEN
                 SyncMoveOn sync3, all_tasks;
-                IF i=BUFFER_JOINT_POS THEN
+                IF i=BUFFER_POS_J THEN
                   moveComplete:=FALSE;
                   MoveAbsJ bufferJointPos{i} \ID:=i,bufferJointSpeeds{i},currentZoneR,currentToolR,\Wobj:=currentWobjR;
                   moveComplete:=TRUE;
@@ -866,7 +857,7 @@ MODULE MTN_R
                 ENDIF
                 SyncMoveOff sync4;
               ELSE
-                IF i=BUFFER_JOINT_POS THEN
+                IF i=BUFFER_POS_J THEN
                   moveComplete:=FALSE;
                   MoveAbsJ bufferJointPos{i},bufferJointSpeeds{i},currentZoneR,currentToolR,\Wobj:=currentWobjR;
                   moveComplete:=TRUE;
@@ -887,15 +878,15 @@ MODULE MTN_R
           bufferJointSpeeds{1}.v_ori:=bufferJointSpeeds{1}.v_ori*0.50;
           bufferJointSpeeds{2}.v_tcp:=bufferJointSpeeds{2}.v_tcp*0.75;
           bufferJointSpeeds{2}.v_ori:=bufferJointSpeeds{2}.v_ori*0.75;
-          bufferJointSpeeds{BUFFER_JOINT_POS-1}.v_tcp:=bufferJointSpeeds{BUFFER_JOINT_POS-1}.v_tcp*0.75;
-          bufferJointSpeeds{BUFFER_JOINT_POS-1}.v_ori:=bufferJointSpeeds{BUFFER_JOINT_POS-1}.v_ori*0.75;
-          bufferJointSpeeds{BUFFER_JOINT_POS}.v_tcp:=bufferJointSpeeds{BUFFER_JOINT_POS}.v_tcp*0.50;
-          bufferJointSpeeds{BUFFER_JOINT_POS}.v_ori:=bufferJointSpeeds{BUFFER_JOINT_POS}.v_ori*0.50;
+          bufferJointSpeeds{BUFFER_POS_J-1}.v_tcp:=bufferJointSpeeds{BUFFER_POS_J-1}.v_tcp*0.75;
+          bufferJointSpeeds{BUFFER_POS_J-1}.v_ori:=bufferJointSpeeds{BUFFER_POS_J-1}.v_ori*0.75;
+          bufferJointSpeeds{BUFFER_POS_J}.v_tcp:=bufferJointSpeeds{BUFFER_POS_J}.v_tcp*0.50;
+          bufferJointSpeeds{BUFFER_POS_J}.v_ori:=bufferJointSpeeds{BUFFER_POS_J}.v_ori*0.50;
           !Trapezoidal velocity
 
-          FOR i FROM 1 TO (BUFFER_JOINT_POS) DO
+          FOR i FROM 1 TO (BUFFER_POS_J) DO
             IF collision=0 THEN
-              IF i=BUFFER_JOINT_POS THEN
+              IF i=BUFFER_POS_J THEN
                 moveComplete:=FALSE;
                 MoveAbsJ bufferJointPos{i},bufferJointSpeeds{i},currentZoneR,currentToolR,\Wobj:=currentWobjR;
                 moveComplete:=TRUE;
