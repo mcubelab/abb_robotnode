@@ -22,6 +22,16 @@
 #include "abb_robotnode/Service_SetZone.h"
 
 // Motion services
+#include "abb_robotnode/Service_AddToCartesianBuffer.h"
+#include "abb_robotnode/Service_ClearCartesianBuffer.h"
+#include "abb_robotnode/Service_ExecuteCartesianBuffer.h"
+#include "abb_robotnode/Service_ExecuteSynchroCartesianBuffer.h"
+#include "abb_robotnode/Service_GetCartesianBufferSize.h"
+#include "abb_robotnode/Service_AddToJointBuffer.h"
+#include "abb_robotnode/Service_ClearJointBuffer.h"
+#include "abb_robotnode/Service_ExecuteJointBuffer.h"
+#include "abb_robotnode/Service_ExecuteSynchroJointBuffer.h"
+#include "abb_robotnode/Service_GetJointBufferSize.h"
 #include "abb_robotnode/Service_SetCartesian.h"
 #include "abb_robotnode/Service_SetEGMMode.h"
 #include "abb_robotnode/Service_SetJoints.h"
@@ -37,7 +47,9 @@
 #define SERVICE_AUX_LIST() \
 void parseJoints(char* reply, int& idCode, int& ok, std::vector<double>& angles); \
 bool prepareJoints(char* msg, int idCode, int randNumber, std::vector<double>& joints); \
+bool prepareJoints(char* msg, int idCode, int randNumber, std::vector<double>& joints, double extra); \
 bool prepareCartesian(char* msg, int idCode, int randNumber, double x, double y, double z, double q0, double qx, double qy, double qz); \
+bool prepareCartesian(char* msg, int idCode, int randNumber, double x, double y, double z, double q0, double qx, double qy, double qz, double extra); \
 int setDefaults(); \
 int setInertia(double m, double cgx, double cgy, double cgz, double ix, double iy, double iz); \
 int setMaxSpeed(double tcp, double ori, double joints); \
@@ -65,6 +77,16 @@ SERVICE_CALLBACK_DEC(GetGripperPosition) \
 SERVICE_CALLBACK_DEC(GetGripperStatus) \
 SERVICE_CALLBACK_DEC(GetJoints) \
 SERVICE_CALLBACK_DEC(GetRobotAngle) \
+SERVICE_CALLBACK_DEC(AddToCartesianBuffer) \
+SERVICE_CALLBACK_DEC(ClearCartesianBuffer) \
+SERVICE_CALLBACK_DEC(ExecuteCartesianBuffer) \
+SERVICE_CALLBACK_DEC(ExecuteSynchroCartesianBuffer) \
+SERVICE_CALLBACK_DEC(GetCartesianBufferSize) \
+SERVICE_CALLBACK_DEC(AddToJointBuffer) \
+SERVICE_CALLBACK_DEC(ClearJointBuffer) \
+SERVICE_CALLBACK_DEC(ExecuteJointBuffer) \
+SERVICE_CALLBACK_DEC(ExecuteSynchroJointBuffer) \
+SERVICE_CALLBACK_DEC(GetJointBufferSize) \
 SERVICE_CALLBACK_DEC(SetCartesian) \
 SERVICE_CALLBACK_DEC(SetDefaults) \
 SERVICE_CALLBACK_DEC(SetEGMMode) \
@@ -88,6 +110,16 @@ ADVERTISE_SERVICE(GetGripperStatus) IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(GetIK) IRB120|IRB1600|IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(GetJoints) IRB120|IRB1600|IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(GetRobotAngle) IRB14000 END_SERVICE() \
+ADVERTISE_SERVICE(AddToCartesianBuffer) IRB120|IRB1600|IRB14000 END_SERVICE() \
+ADVERTISE_SERVICE(ClearCartesianBuffer) IRB120|IRB1600|IRB14000 END_SERVICE() \
+ADVERTISE_SERVICE(ExecuteCartesianBuffer) IRB120|IRB1600|IRB14000 END_SERVICE() \
+ADVERTISE_SERVICE(ExecuteSynchroCartesianBuffer) IRB14000 END_SERVICE() \
+ADVERTISE_SERVICE(GetCartesianBufferSize) IRB120|IRB1600|IRB14000 END_SERVICE() \
+ADVERTISE_SERVICE(AddToJointBuffer) IRB120|IRB1600|IRB14000 END_SERVICE() \
+ADVERTISE_SERVICE(ClearJointBuffer) IRB120|IRB1600|IRB14000 END_SERVICE() \
+ADVERTISE_SERVICE(ExecuteJointBuffer) IRB120|IRB1600|IRB14000 END_SERVICE() \
+ADVERTISE_SERVICE(ExecuteSynchroJointBuffer) IRB14000 END_SERVICE() \
+ADVERTISE_SERVICE(GetJointBufferSize) IRB120|IRB1600|IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(SetCartesian) IRB120|IRB1600|IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(SetDefaults) IRB120|IRB1600|IRB14000 END_SERVICE() \
 ADVERTISE_SERVICE(SetEGMMode) IRB120|IRB1600|IRB14000 END_SERVICE() \

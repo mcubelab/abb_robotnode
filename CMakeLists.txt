@@ -42,6 +42,16 @@ add_service_files(DIRECTORY srv FILES
   Info/Service_SetZone.srv
 
   # Motion services
+  Motion/Service_AddToCartesianBuffer.srv
+  Motion/Service_ClearCartesianBuffer.srv
+  Motion/Service_ExecuteCartesianBuffer.srv
+  Motion/Service_ExecuteSynchroCartesianBuffer.srv
+  Motion/Service_GetCartesianBufferSize.srv
+  Motion/Service_AddToJointBuffer.srv
+  Motion/Service_ClearJointBuffer.srv
+  Motion/Service_ExecuteJointBuffer.srv
+  Motion/Service_ExecuteSynchroJointBuffer.srv
+  Motion/Service_GetJointBufferSize.srv
   Motion/Service_SetCartesian.srv
   Motion/Service_SetEGMMode.srv
   Motion/Service_SetJoints.srv
@@ -99,6 +109,16 @@ add_executable(abb_robotnode
   src/services/Info/SetZone.cpp
 
   # Motion services
+  src/services/Motion/AddToCartesianBuffer.cpp
+  src/services/Motion/ClearCartesianBuffer.cpp
+  src/services/Motion/ExecuteCartesianBuffer.cpp
+  src/services/Motion/ExecuteSynchroCartesianBuffer.cpp
+  src/services/Motion/GetCartesianBufferSize.cpp
+  src/services/Motion/AddToJointBuffer.cpp
+  src/services/Motion/ClearJointBuffer.cpp
+  src/services/Motion/ExecuteJointBuffer.cpp
+  src/services/Motion/ExecuteSynchroJointBuffer.cpp
+  src/services/Motion/GetJointBufferSize.cpp
   src/services/Motion/SetCartesian.cpp
   src/services/Motion/SetEGMMode.cpp
   src/services/Motion/SetJoints.cpp
