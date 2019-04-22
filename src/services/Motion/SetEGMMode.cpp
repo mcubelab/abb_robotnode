@@ -10,6 +10,13 @@ SERVICE_CALLBACK_DEF(SetEGMMode)
     return true;
   }
 
+  if(req.mode == EGM_CART_POS_AUTO || req.mode == EGM_JOINT_POS_AUTO)
+  {
+    res.success = false;
+    res.msg = "Mode not implemented yet.";
+    return true;
+  }
+
   if(egmMode == req.mode) {
     res.success = true;
     res.msg = "No change.";
