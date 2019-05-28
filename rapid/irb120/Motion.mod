@@ -736,7 +736,7 @@ MODULE Motion
             \x:=egm_minmax_lin1 \y:=egm_minmax_lin1 \z:=egm_minmax_lin1
             \rx:=egm_minmax_rot1 \ry:=egm_minmax_rot1 \rz:=egm_minmax_rot1\LpFilter:=100\Samplerate:=4\MaxSpeedDeviation:= 1000;
 
-            EGMRunPose egmID1, EGM_STOP_HOLD \x \y \z\CondTime:=86400 \RampInTime:=0.05 \RampOutTime:=0.5 \PosCorrGain:=positiongain;
+            EGMRunPose egmID1, EGM_STOP_HOLD \x \y \z \Rx \Ry \Rz \CondTime:=86400 \RampInTime:=0.05 \RampOutTime:=0.5 \PosCorrGain:=positiongain;
             egmSt1:=EGMGetState(egmID1);
           ENDIF
 

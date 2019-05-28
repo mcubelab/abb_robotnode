@@ -6,11 +6,11 @@ int RobotController::setTool(double x, double y, double z, double q0, double qx,
     return 1;
 
   int randNumber = generateRandNumber();
-  sprintf(infoMsg, "%.2d %.3d %+08.1lf %+08.1lf %+08.1lf %+08.5lf %+08.5lf %+08.5lf %+08.5lf #", 6, randNumber, x, y, z, q0, qx, qy, qz);
+  sprintf(motionMsg, "%.2d %.3d %+08.1lf %+08.1lf %+08.1lf %+08.5lf %+08.5lf %+08.5lf %+08.5lf #", 6, randNumber, x, y, z, q0, qx, qy, qz);
 
-  if(sendInfo(randNumber)) {
+  if(sendMotion(randNumber)) {
     int ok, idCode;
-    sscanf(infoReply, "%*d %d %d", &idCode, &ok);
+    sscanf(motionReply, "%*d %d %d", &idCode, &ok);
     if((bool) ok) {
       currentTool[0] = x;
       currentTool[1] = y;
@@ -28,16 +28,8 @@ int RobotController::setTool(double x, double y, double z, double q0, double qx,
 
 SERVICE_CALLBACK_DEF(SetTool)
 {
+  SERVICE_CHECK_EGM_OFF()
+  
   int result = setTool(req.x, req.y, req.z, req.q0, req.qx, req.qy, req.qz);
-  if(result == 1) {
-    res.success = true;
-    res.msg = "Ok.";
-  } else if(result == -1) {
-    res.success = false;
-    res.msg = "Wrong answer from robot.";
-  } else {
-    res.success = false;
-    res.msg = "No answer received.";
-  }
-  return true;
+  SERVICE_RESPONSE_FROM_RESULT()
 }

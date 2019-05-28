@@ -33,13 +33,6 @@ add_service_files(DIRECTORY srv FILES
   Info/Service_GetJoints.srv
   Info/Service_GetRobotAngle.srv
   Info/Service_Ping.srv
-  Info/Service_SetDefaults.srv
-  Info/Service_SetInertia.srv
-  Info/Service_SetIOSignal.srv
-  Info/Service_SetMaxSpeed.srv
-  Info/Service_SetTool.srv
-  Info/Service_SetWorkObject.srv
-  Info/Service_SetZone.srv
 
   # Motion services
   Motion/Service_AddToCartesianBuffer.srv
@@ -58,6 +51,13 @@ add_service_files(DIRECTORY srv FILES
   Motion/Service_SetMaxAcceleration.srv
   Motion/Service_SetMotionSupervision.srv
   Motion/Service_Stop.srv
+  Motion/Service_SetDefaults.srv
+  Motion/Service_SetInertia.srv
+  Motion/Service_SetIOSignal.srv
+  Motion/Service_SetMaxSpeed.srv
+  Motion/Service_SetTool.srv
+  Motion/Service_SetWorkObject.srv
+  Motion/Service_SetZone.srv
 )
 
 generate_messages(
@@ -100,14 +100,6 @@ add_executable(abb_robotnode
   src/services/Info/GetIK.cpp
   src/services/Info/GetJoints.cpp
   src/services/Info/GetRobotAngle.cpp
-  src/services/Info/SetDefaults.cpp
-  src/services/Info/SetInertia.cpp
-  src/services/Info/SetIOSignal.cpp
-  src/services/Info/SetMaxSpeed.cpp
-  src/services/Info/SetTool.cpp
-  src/services/Info/SetWorkObject.cpp
-  src/services/Info/SetZone.cpp
-
   # Motion services
   src/services/Motion/AddToCartesianBuffer.cpp
   src/services/Motion/ClearCartesianBuffer.cpp
@@ -125,6 +117,14 @@ add_executable(abb_robotnode
   src/services/Motion/SetMaxAcceleration.cpp
   src/services/Motion/SetMotionSupervision.cpp
   src/services/Motion/Stop.cpp
+  src/services/Motion/SetDefaults.cpp
+  src/services/Motion/SetInertia.cpp
+  src/services/Motion/SetIOSignal.cpp
+  src/services/Motion/SetMaxSpeed.cpp
+  src/services/Motion/SetTool.cpp
+  src/services/Motion/SetWorkObject.cpp
+  src/services/Motion/SetZone.cpp
+
   ${PROTO_SRCS}
   ${PROTO_HDRS}
 )

@@ -6,11 +6,11 @@ int RobotController::setInertia(double m, double cgx, double cgy, double cgz, do
     return 1;
 
   int randNumber = generateRandNumber();
-  sprintf(infoMsg, "%.2d %.3d %+08.5lf %+08.1lf %+08.1lf %+08.1lf %+08.5lf %+08.5lf %+08.5lf #", 14, randNumber, m, cgx, cgy, cgz, ix, iy, iz);
+  sprintf(motionMsg, "%.2d %.3d %+08.5lf %+08.1lf %+08.1lf %+08.1lf %+08.5lf %+08.5lf %+08.5lf #", 14, randNumber, m, cgx, cgy, cgz, ix, iy, iz);
 
-  if(sendInfo(randNumber)) {
+  if(sendMotion(randNumber)) {
     int ok, idCode;
-    sscanf(infoReply, "%*d %d %d", &idCode, &ok);
+    sscanf(motionReply, "%*d %d %d", &idCode, &ok);
     if((bool) ok) {
       currentInertia[0] = m;
       currentInertia[1] = cgx;
@@ -29,15 +29,6 @@ int RobotController::setInertia(double m, double cgx, double cgy, double cgz, do
 SERVICE_CALLBACK_DEF(SetInertia)
 {
   int result = setInertia(req.m, req.cgx, req.cgy, req.cgz, req.ix, req.iy, req.iz);
-  if(result == 1) {
-    res.success = true;
-    res.msg = "Ok.";
-  } else if(result == -1) {
-    res.success = false;
-    res.msg = "Wrong answer from robot.";
-  } else {
-    res.success = false;
-    res.msg = "No answer received.";
-  }
+  SERVICE_RESPONSE_FROM_RESULT()
   return true;
 }

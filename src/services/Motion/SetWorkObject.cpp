@@ -6,10 +6,10 @@ int RobotController::setWorkObject(double x, double y, double z, double q0, doub
     return 1;
 
   int randNumber = generateRandNumber();
-  sprintf(infoMsg, "%.2d %.3d %+08.1lf %+08.1lf %+08.1lf %+08.5lf %+08.5lf %+08.5lf %+08.5lf #", 7, randNumber, x, y, z, q0, qx, qy, qz);
-  if(sendInfo(randNumber)) {
+  sprintf(motionMsg, "%.2d %.3d %+08.1lf %+08.1lf %+08.1lf %+08.5lf %+08.5lf %+08.5lf %+08.5lf #", 7, randNumber, x, y, z, q0, qx, qy, qz);
+  if(sendMotion(randNumber)) {
     int ok, idCode;
-    sscanf(infoReply, "%*d %d %d", &idCode, &ok);
+    sscanf(motionReply, "%*d %d %d", &idCode, &ok);
     if((bool) ok) {
       currentWobj[0] = x;
       currentWobj[1] = y;
@@ -27,16 +27,8 @@ int RobotController::setWorkObject(double x, double y, double z, double q0, doub
 
 SERVICE_CALLBACK_DEF(SetWorkObject)
 {
+  SERVICE_CHECK_EGM_OFF()
+  
   int result = setWorkObject(req.x, req.y, req.z, req.q0, req.qx, req.qy, req.qz);
-  if(result == 1) {
-    res.success = true;
-    res.msg = "Ok.";
-  } else if(result == -1) {
-    res.success = false;
-    res.msg = "Wrong answer from robot.";
-  } else {
-    res.success = false;
-    res.msg = "No answer received.";
-  }
-  return true;
+  SERVICE_RESPONSE_FROM_RESULT()
 }

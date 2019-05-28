@@ -2,6 +2,8 @@
 
 SERVICE_CALLBACK_DEF(ClearCartesianBuffer)
 {
+  SERVICE_CHECK_EGM_OFF()
+  
   // Send command to robot
   int randNumber = generateRandNumber();
   sprintf(motionMsg, "%.2d %.3d #", 31, randNumber);

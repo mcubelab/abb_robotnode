@@ -18,21 +18,10 @@ int RobotController::setMotionSupervision(double val) {
 
 SERVICE_CALLBACK_DEF(SetMotionSupervision)
 {
-  if(egmMode == EGM_OFF) {
-    int result = setMotionSupervision(req.supervision);
-    if(result == 1) {
-      res.success = true;
-      res.msg = "Ok.";
-    } else if(result == -1) {
-      res.success = false;
-      res.msg = "Wrong answer from robot.";
-    } else {
-      res.success = false;
-      res.msg = "No answer received.";
-    }
-  } else {
-    res.success = false;
-    res.msg = "EGM needs to be stopped.";
-  }
+  SERVICE_CHECK_EGM_OFF()
+
+  int result = setMotionSupervision(req.supervision);
+  SERVICE_RESPONSE_FROM_RESULT()
+
   return true;
 }

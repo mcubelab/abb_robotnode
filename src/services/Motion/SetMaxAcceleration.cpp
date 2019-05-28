@@ -14,21 +14,8 @@ int RobotController::setMaxAcceleration(double acc, double deacc) {
 
 SERVICE_CALLBACK_DEF(SetMaxAcceleration)
 {
-  if(egmMode == EGM_OFF) {
-    int result = setMaxAcceleration(req.acc, req.deacc);
-    if(result == 1) {
-      res.success = true;
-      res.msg = "Ok.";
-    } else if(result == -1) {
-      res.success = false;
-      res.msg = "Wrong answer from robot.";
-    } else {
-      res.success = false;
-      res.msg = "No answer received.";
-    }
-  } else {
-    res.success = false;
-    res.msg = "EGM needs to be stopped.";
-  }
-  return true;
+  SERVICE_CHECK_EGM_OFF()
+  
+  int result = setMaxAcceleration(req.acc, req.deacc);
+  SERVICE_RESPONSE_FROM_RESULT()
 }

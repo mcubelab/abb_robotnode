@@ -1,0 +1,5 @@
+# Adds a point to gripper position buffer
+float64 position
+---
+bool success
+string msg

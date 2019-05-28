@@ -59,6 +59,26 @@ int setTool(double x, double y, double z, double q0, double qx, double qy, doubl
 int setWorkObject(double x, double y, double z, double q0, double qx, double qy, double qz); \
 int setZone(int z);
 
+#define SERVICE_RESPONSE_FROM_RESULT() \
+if(result == 1) { \
+  res.success = true; \
+  res.msg = "Ok."; \
+} else if(result == -1) { \
+  res.success = false; \
+  res.msg = "Wrong answer from robot."; \
+} else { \
+  res.success = false; \
+  res.msg = "No answer received."; \
+} \
+return true;
+
+#define SERVICE_CHECK_EGM_OFF() \
+if(egmMode != EGM_OFF) { \
+  res.success = false; \
+  res.msg = "EGM needs to be stopped."; \
+  return true; \
+}
+
 // All services should be added:
 // - below, in the list of service callbacks and advertised services,
 // - .srv file in srv/ folder,

@@ -1,0 +1,4 @@
+# Clears cartesian pose and gripper position buffers
+---
+bool success
+string msg

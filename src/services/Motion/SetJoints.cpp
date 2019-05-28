@@ -2,7 +2,7 @@
 
 SERVICE_CALLBACK_DEF(SetJoints)
 {
-  // TODO: Validate joints!!
+  // TODO: Validate joints
   if(egmMode == EGM_JOINT_POS_AUTO) {
     targetJointsMutex.lock();
     targetJoints.header.seq++;

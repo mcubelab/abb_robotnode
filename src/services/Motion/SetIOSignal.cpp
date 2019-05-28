@@ -3,11 +3,11 @@
 SERVICE_CALLBACK_DEF(SetIOSignal)
 {
   int randNumber = generateRandNumber();
-  sprintf(infoMsg, "%.2d %.1d %.1d %.1d #", 11, randNumber, req.output_num, req.signal);
+  sprintf(motionMsg, "%.2d %.1d %.1d %.1d #", 11, randNumber, req.output_num, req.signal);
 
-  if(sendInfo(randNumber)) {
+  if(sendMotion(randNumber)) {
     int ok, idCode;
-    sscanf(infoReply, "%*d %d %d", &idCode, &ok);
+    sscanf(motionReply, "%*d %d %d", &idCode, &ok);
     if((bool) ok) {
       res.success = true;
       res.msg = "Ok.";

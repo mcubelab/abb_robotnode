@@ -80,16 +80,8 @@ int RobotController::setDefaults() {
 
 SERVICE_CALLBACK_DEF(SetDefaults)
 {
+  SERVICE_CHECK_EGM_OFF()
+  
   int result = setDefaults();
-  if(result == 1) {
-    res.success = true;
-    res.msg = "Ok.";
-  } else if(result == -1) {
-    res.success = false;
-    res.msg = "Wrong answer from robot.";
-  } else {
-    res.success = false;
-    res.msg = "No answer received.";
-  }
-  return true;
+  SERVICE_RESPONSE_FROM_RESULT()
 }

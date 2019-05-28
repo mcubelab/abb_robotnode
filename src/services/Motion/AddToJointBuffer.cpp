@@ -2,14 +2,9 @@
 
 SERVICE_CALLBACK_DEF(AddToJointBuffer)
 {
-  int randNumber = generateRandNumber();
+  SERVICE_CHECK_EGM_OFF()
 
-  // Pre-checks
-  if(egmMode != EGM_OFF) {
-    res.success = false;
-    res.msg = "Current EGM mode is incompatible with this task.";
-    return true;
-  }
+  int randNumber = generateRandNumber();
   if(!prepareJoints(motionMsg, 37, randNumber, req.joints)) {
     res.success = false;
     res.msg = "Sent joints are not valid.";

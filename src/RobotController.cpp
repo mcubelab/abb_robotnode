@@ -105,7 +105,7 @@ void RobotController::advertiseService(std::string name, auto func, int compatib
   if((model & compatibleModels) == model) {
     serviceHandlers.push_back(node->advertiseService(name, func, this));
   } else {
-    ROS_INFO("%s service not initialized. Model not compatible. %d notin %d, result is %d", name.c_str(), model, compatibleModels, model & compatibleModels);
+    // ROS_INFO("%s service not initialized. Model not compatible. %d notin %d, result is %d", name.c_str(), model, compatibleModels, model & compatibleModels);
   }
 }
 

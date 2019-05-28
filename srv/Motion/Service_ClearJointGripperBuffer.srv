@@ -1,0 +1,4 @@
+# Clears joints and gripper position buffers
+---
+bool success
+string msg

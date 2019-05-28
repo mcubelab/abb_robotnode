@@ -1,13 +1,13 @@
 #include "abb_robotnode/RobotController.hpp"
 
-SERVICE_CALLBACK_DEF(AddToCartesianBuffer)
+SERVICE_CALLBACK_DEF(AddToJointGripperBuffer)
 {
   SERVICE_CHECK_EGM_OFF()
-
+  
   int randNumber = generateRandNumber();
-  if(!prepareCartesian(motionMsg, 30, randNumber, req.x, req.y, req.z, req.q0, req.qx, req.qy, req.qz)) {
+  if(!prepareJoints(motionMsg, 37, randNumber, req.joints, req.gripperPos)) {
     res.success = false;
-    res.msg = "Sent pose is not valid.";
+    res.msg = "Sent joints are not valid.";
     return true;
   }
 

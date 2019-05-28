@@ -1,0 +1,5 @@
+# Returns size of cartesian pose and gripper position buffers
+---
+int64 size
+bool success
+string msg

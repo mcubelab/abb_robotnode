@@ -734,7 +734,7 @@ MODULE MTN_L
           IF nParams=2 AND params{1}=1 THEN
             SyncMoveOn sync1, all_tasks;
           ENDIF
-          FOR i FROM 1 TO (BUFFER_POS) DO
+          FOR i FROM 1 TO (BUFFER_POS_C) DO
             IF collision=0 THEN
               moveComplete:=FALSE;
               MoveL bufferTargets{i}, bufferSpeeds{i},currentZoneL,currentToolL\WObj:=currentWobjL;

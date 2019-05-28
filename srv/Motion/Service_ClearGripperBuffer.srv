@@ -1,0 +1,4 @@
+# Clears gripper position buffer
+---
+bool success
+string msg
