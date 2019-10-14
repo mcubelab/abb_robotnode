@@ -3,7 +3,6 @@ ROS package for connecting to ABB robot controllers via TCP/IP, featuring EGM co
 
 A minimal working environment for this package would be given by this `Dockerfile`:
 
-``
-  FROM ros:kinetic-ros-base
-  RUN apt-get update && apt-get install -y libprotobuf-dev protobuf-compiler protobuf-c-compiler
-``
+    FROM ros:kinetic-ros-base
+    RUN apt-get update && apt-get install -y libprotobuf-dev protobuf-compiler protobuf-c-compiler
+
