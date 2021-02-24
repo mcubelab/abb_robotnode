@@ -15,9 +15,9 @@ robot1: {
 
   # Robot tool inertia
   # See tooldata RAPID documentation, 3.66, page 1209-10
-  toolMass: 0.1,
-  toolCGX: -0.1, toolCGY: 8.3, toolCGZ: 310.4,
-  toolIX: 0.023, toolIY: 0.02, toolIZ: 0.036,
+  toolMass: 0.65, # kg
+  toolCGX: 0, toolCGY: 0, toolCGZ: 90, # mm
+  toolIX: 0.002, toolIY: 0.0035, toolIZ: 0.002, # kgm^2
 
   # Robot work object frame
   # See wobjdata RAPID documentation, 3.75, page 1224-25
