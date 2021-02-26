@@ -11,7 +11,10 @@ robot1: {
   # Robot tool frame
   # See tooldata RAPID documentation, 3.66, page 1208
   toolQ0: 1.0, toolQX: 0.0, toolQY: 0.0, toolQZ: 0.0,
-  toolX: 0.0, toolY: 0.0, toolZ: 0.0,
+  toolX: 0.0, toolY: 0.0,
+  #~ toolZ: 100.0, # for checkerboard
+  #~ toolZ: 135.0, # For gelsight-WSG32 gripper 
+  toolZ: 0.0, # For base of the WSG32 gripper 
 
   # Robot tool inertia
   # See tooldata RAPID documentation, 3.66, page 1209-10
@@ -25,7 +28,7 @@ robot1: {
   workobjectX: 0, workobjectY: 0, workobjectZ: 0,
 
   # Maximum acceleration and deacceleration in (m/s^2)
-  maxAcceleration: 4, maxDeacceleration: 4,
+  maxAcceleration: 3, maxDeacceleration: 3,
 
   # Zone data: Sets the movement termination behavior based on
   # stop points or fly-by points and their zones.
@@ -33,7 +36,7 @@ robot1: {
   zone: 1,
 
   # Connection parameters
-  ip: 192.168.0.191,
+  ip: 192.168.125.1,
   infoPort: 5004,
   motionPort: 5000,
   loggerPort: 5001,
@@ -58,13 +61,15 @@ robot2: {
   # Robot tool frame
   # See tooldata RAPID documentation, 3.66, page 1208
   toolQ0: 1.0, toolQX: 0.0, toolQY: 0.0, toolQZ: 0.0,
-  toolX: 0.0, toolY: 0.0, toolZ: 0.0,
+  toolX: 0.0, toolY: 0.0, 
+  #~ toolZ: 135.0, # For gelsight-WSG32 gripper 
+  toolZ: 0.0, # For base of WSG32 gripper 
 
   # Robot tool inertia
   # See tooldata RAPID documentation, 3.66, page 1209-10
-  toolMass: 0.1,
-  toolCGX: -0.1, toolCGY: 8.3, toolCGZ: 310.4,
-  toolIX: 0.023, toolIY: 0.02, toolIZ: 0.036,
+  toolMass: 0.65, # kg
+  toolCGX: 0, toolCGY: 0, toolCGZ: 90, # mm
+  toolIX: 0.002, toolIY: 0.0035, toolIZ: 0.002, # kgm^2
 
   # Robot work object frame
   # See wobjdata RAPID documentation, 3.75, page 1224-25
@@ -72,7 +77,7 @@ robot2: {
   workobjectX: 0, workobjectY: 0, workobjectZ: 0,
 
   # Maximum acceleration and deacceleration in (m/s^2)
-  maxAcceleration: 4, maxDeacceleration: 4,
+  maxAcceleration: 3, maxDeacceleration: 3,
 
   # Zone data: Sets the movement termination behavior based on
   # stop points or fly-by points and their zones.
@@ -80,7 +85,7 @@ robot2: {
   zone: 1,
 
   # Connection parameters
-  ip: 192.168.0.191,
+  ip: 192.168.125.1,
   infoPort: 5005,
   motionPort: 5002,
   loggerPort: 5003,
